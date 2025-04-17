@@ -1,3 +1,5 @@
+package auction;
+
 public class RegisterBid {
 
     private static int basePrice;

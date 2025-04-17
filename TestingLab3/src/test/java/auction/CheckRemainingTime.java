@@ -1,3 +1,5 @@
+package auction;
+
 public class CheckRemainingTime {
 
     private static double remainingTime;

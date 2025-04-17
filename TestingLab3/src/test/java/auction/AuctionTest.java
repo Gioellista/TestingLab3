@@ -1,3 +1,6 @@
+package auction;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -13,8 +16,8 @@ public class AuctionTest {
     public void registerBid() {
         RegisterBid.setBasePrice(400);
         RegisterBid.setIncrement(10);
-        assertTrue(RegisterBid.registerBid(500));
-        assertFalse(RegisterBid.registerBid(495));
+        Assertions.assertTrue(RegisterBid.registerBid(500));
+        Assertions.assertFalse(RegisterBid.registerBid(495));
     }
 
 
@@ -23,11 +26,11 @@ public class AuctionTest {
         IsOngoing.setStartTime("8:00 16/06/2023");
         IsOngoing.setEndTime("11:00 16/06/2023");
         IsOngoing.setCurrentTime("8:00 15/06/2023");
-        assertFalse(IsOngoing.isOngoing(IsOngoing.getCurrentTime()));
+        Assertions.assertFalse(IsOngoing.isOngoing(IsOngoing.getCurrentTime()));
         IsOngoing.setCurrentTime("8:30 16/06/2023");
-        assertTrue(IsOngoing.isOngoing(IsOngoing.getCurrentTime()));
+        Assertions.assertTrue(IsOngoing.isOngoing(IsOngoing.getCurrentTime()));
         IsOngoing.setCurrentTime("12:30 17/06/2023");
-        assertFalse(IsOngoing.isOngoing(IsOngoing.getCurrentTime()));
+        Assertions.assertFalse(IsOngoing.isOngoing(IsOngoing.getCurrentTime()));
     }
 
     @Test
@@ -40,6 +43,21 @@ public class AuctionTest {
 
     @Test
     public void awardItem() {
+        int[] auctions = new int[]{400, 500, 700};
+        AwardItem.addFinalAuctions(auctions);
+        assertTrue(AwardItem.awardItem(auctions));
 
+        auctions = new int[]{400, 500 ,500};
+        AwardItem.addFinalAuctions(auctions);
+        assertTrue(AwardItem.requestNewBid(auctions));
+
+        int[] auctionsAfterTie = new int[]{700, 700};
+        AwardItem.addFinalAuctions(auctions);
+        assertTrue(AwardItem.decideWinner(auctionsAfterTie));
+
+        auctions = new int[]{};
+        AwardItem.addFinalAuctions(auctions);
+        assertFalse(AwardItem.awardItem(auctions));
     }
+
 }
