@@ -1,0 +1,65 @@
+/*____________________*/
+AUCTION - US 2
+
+TC - 1
+We prompted ChatGPT with the prompt below. We asked for the logic class based on the test method that we developed.
+/*____________________*/
+PROMPT:
+You are a software developer in a test driven development team, your task is to write
+
+class IsOngoing
+
+for the following test case:
+
+|**Test Case** | **Input** | **Description** | **Expected Behaviour**|
+|---------------------------------|--------------------------------------------------------|-------------------------------|------------------------------------------|
+| TC1: isOngoingTest | Auction is created, system time is before the start time | Verify that an auction before its start time is not flagged as ongoing | Auction is flagged as "Not Started" |
+
+
+using stubs and drivers.
+
+Here is the test written so far with JUnit5, along with the error trace:
+
+@Test
+    public void isOngoing1(){
+        IsOngoing.setStartTime("8:00 16/06/2023");
+        IsOngoing.setEndTime("11:00 16/06/2023");
+        IsOngoing.setCurrentTime("8:00 15/06/2023");
+        assertFalse(IsOngoing.isOngoing(IsOngoing.getCurrentTime()));
+    }
+Error trace:
+
+java: cannot find symbol
+  symbol:   variable IsOngoing
+
+
+RESULT:
+The code works as expected and the test passes.
+
+/*____________________*/
+
+TC - 2
+We wrote the following test, that run successfully.
+
+@Test
+    public void isOngoing2(){
+        IsOngoing.setStartTime("8:00 16/06/2023");
+        IsOngoing.setEndTime("11:00 16/06/2023");
+        IsOngoing.setCurrentTime("8:30 16/06/2023");
+        assertTrue(IsOngoing.isOngoing(IsOngoing.getCurrentTime()));
+    }
+
+/*____________________*/
+
+TC - 3
+We wrote the following test, that run successfully.
+
+@Test
+    public void isOngoing3(){
+        IsOngoing.setStartTime("8:00 16/06/2023");
+        IsOngoing.setEndTime("11:00 16/06/2023");
+        IsOngoing.setCurrentTime("12:30 17/06/2023");
+        assertFalse(IsOngoing.isOngoing(IsOngoing.getCurrentTime()));
+    }
+
+

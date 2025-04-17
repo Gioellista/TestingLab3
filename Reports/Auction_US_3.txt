@@ -1,0 +1,46 @@
+/*____________________*/
+AUCTION - US 3
+
+TC - 1
+We prompted ChatGPT with the prompt below. We asked for the logic class based on the test method that we developed.
+/*____________________*/
+PROMPT:
+You are a software developer in a test driven development team, your task is to write
+
+class CheckRemainingTime
+
+for the following test case:
+
+| **Test Case** | **Input** | **Description** | **Expected Behaviour** |
+|--------------|----------|-----------------|------------------------|
+| TC1 - checkRemainingTimeTest | An auction is ongoing, and the remaining time is positive. | The system should compute and display the remaining time along with auction details. | The remaining time is displayed correctly along with auction details. |
+
+
+using stubs and drivers.
+
+Here is the test written so far with JUnit5, along with the error trace:
+
+@Test
+    public void checkRemainingTime() {
+        CheckRemainingTime.setRemainingTime(142.76);
+        assertTrue(CheckRemainingTime.getRemainingTime() > 0.0);
+    }
+Error trace:
+
+java: cannot find symbol
+  symbol:   variable CheckRemainingTime
+
+
+RESULT:
+The code works as expected and the test passes.
+
+/*____________________*/
+
+TC - 2
+We wrote the following test, that run successfully.
+
+    @Test
+    public void checkRemainingTime2() {
+        CheckRemainingTime.setRemainingTime(0.0);
+        assertFalse(CheckRemainingTime.getRemainingTime() > 0.0);
+    }

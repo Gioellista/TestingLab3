@@ -1,0 +1,47 @@
+/*____________________*/
+AUCTION - US 1
+
+TC - 1
+We prompted ChatGPT with the prompt below. We asked for the logic class based on the test method that we developed.
+/*____________________*/
+PROMPT 1:
+
+You are a software developer in a test driven development team, your task is to write
+
+class RegisterBid
+
+for the following test case:
+
+| TC1: registerBidTest | Input: User places a bid that is the current auction price plus a positive multiple of the auction bid increment. | Description: Verify that a valid bid is successfully registered. | Expected behaviour: The bid is registered, and the auction price is updated. |
+
+using stubs and drivers.
+
+Here is the test written so far with JUnit5, along with the error trace:
+
+@Test
+    public void registerBid(){
+        RegisterBid.setBasePrice(400);
+        RegisterBid.setIncrement(10);
+        assertTrue(RegisterBid.registerBid(500));
+    }
+
+Error trace:
+
+java: cannot find symbol
+  symbol:   variable RegisterBid
+
+
+RESULT:
+The code works as expected and the test passes.
+
+TC - 2
+We wrote the following test, that run successfully.
+
+@Test
+    public void registerBid2(){
+        RegisterBid.setBasePrice(400);
+        RegisterBid.setIncrement(10);
+        assertFalse(RegisterBid.registerBid(495));
+    }
+
+/*____________________*/
