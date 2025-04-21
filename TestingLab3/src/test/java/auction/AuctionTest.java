@@ -13,7 +13,7 @@ public class AuctionTest {
     // ogni test case di un'acceptance test é un assertion nel metodo di test
 
     @Test
-    public void registerBid() {
+    public void registerBidTest() {
         RegisterBid.setBasePrice(400);
         RegisterBid.setIncrement(10);
         Assertions.assertTrue(RegisterBid.registerBid(500));
@@ -22,7 +22,7 @@ public class AuctionTest {
 
 
     @Test
-    public void isOngoing(){
+    public void isOngoingTest(){
         IsOngoing.setStartTime("8:00 16/06/2023");
         IsOngoing.setEndTime("11:00 16/06/2023");
         IsOngoing.setCurrentTime("8:00 15/06/2023");
@@ -34,7 +34,7 @@ public class AuctionTest {
     }
 
     @Test
-    public void checkRemainingTime() {
+    public void checkRemainingTimeTest() {
         CheckRemainingTime.setRemainingTime(142.76);
         assertTrue(CheckRemainingTime.getRemainingTime() > 0.0);
         CheckRemainingTime.setRemainingTime(0.0);
@@ -42,7 +42,7 @@ public class AuctionTest {
     }
 
     @Test
-    public void awardItem() {
+    public void awardItemTest() {
         int[] auctions = new int[]{400, 500, 700};
         AwardItem.addFinalAuctions(auctions);
         assertTrue(AwardItem.awardItem(auctions));

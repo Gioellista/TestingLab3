@@ -1,0 +1,167 @@
+USER STORY 1
+
+We prompted ChatGPT with the prompt below. We asked for the logic class based on the test method that we developed.
+
+    You are a software developer in a test driven development team, your task is to write class 'seller.CreateItem' for the following test cases:
+
+    | TC1: createItemTest | Seller provides a description within the length limit, inserts an image, chooses a category, and adds a correct bid increment. | Verify that an item can be successfully added to the auction when all required fields are correctly provided. | The item is created and added to the auction. |
+    | TC2: createItemTest | Seller provides a description that exceeds the maximum allowed length. | Verify that an error message is displayed when the item description is too long. | An error message is shown, and the item is not added to the auction. |
+    | TC3: createItemTest | Seller provides an incorrect bid increment. | Verify that an error message is displayed when the bid increment is not correctly inserted. | An error message is shown, and the item is not added to the auction. |
+    | TC4: createItemTest | Seller does not select a category from the available options. | Verify that an error message is displayed when an invalid category is chosen. | An error message is shown, and the item is not added to the auction. |
+    | TC5: createItemTest | Seller does not provide an image. | Verify that a warning message is displayed when no image is inserted. | A warning message is shown, but the item is still added to the auction. |
+
+    using stubs and drivers.
+
+    Here is the test written so far with JUnit5, along with the error trace:
+
+    @TestFactory
+    Iterator<DynamicTest> createItem() {
+          List<DynamicTest> dynamicTests = new ArrayList<>();
+
+          int maxLenDesc = 15;
+
+          List<Object[]> itemList = List.of(
+                  new Object[]{new Item("Description", "Category", "img-1", "10"), true},
+                  new Object[]{new Item("Description that is too long", "Category", "img-1", "10"), false},
+                  new Object[]{new Item("Description", "Category", "img-1", null), false},
+                  new Object[]{new Item("Description", null, "img-1", "10"), false},
+                  new Object[]{new Item("Description", "Category", null, "10"), true}
+          );
+
+          int i = 1;
+
+          for (Object[] item : itemList) {
+              Item input = (Item)item[0];
+              Boolean expected = (Boolean)item[1];
+
+              dynamicTests.add(dynamicTest(
+                      "TC" + i + ": createItemTest",
+                      () -> assertEquals(expected, CreateItem.createItem(input))
+              ));
+              i++;
+          }
+
+          return dynamicTests.iterator();
+    }
+
+    Error trace:
+
+    java: cannot find symbol
+      symbol:   variable seller.CreateItem
+      symbol:   variable seller.Item
+
+RESULT:
+The code, that ChatGPT provided us with, works as expected and the test passes.
+
+
+/*____________________*/
+
+
+USER STORY 2
+
+We prompted ChatGPT with the prompt below. We asked for the logic class based on the test method that we developed.
+
+    You are a software developer in a test driven development team, your task is to write class 'seller.ModifyItem' for the following test cases:
+
+    | TC1: modifyItemTest | Seller modifies the item description, image, or category. The description is within the length limit, the image is inserted, and the category is chosen. | Verify that an item’s details can be successfully updated when all required fields are correctly provided. | The item details are updated successfully. |
+    | TC2: modifyItemTest | Seller provides a description that exceeds the maximum allowed length. | Verify that an error message is displayed when the item description is too long. | An error message is shown, and the item details are not updated. |
+    | TC3: modifyItemTest | Seller does not provide an item description. | Verify that an error message is displayed when no description is provided. | An error message is shown, and the item details are not updated. |
+    | TC4: modifyItemTest | Seller does not select a category. | Verify that an error message is displayed when no category is chosen. | An error message is shown, and the item details are not updated. |
+    | TC5: modifyItemTest | Seller does not provide an image. | Verify that a warning message is displayed when no image is inserted. | A warning message is shown, but the item details are updated. |
+
+    using stubs and drivers.
+
+    Here is the test written so far with JUnit5, along with the error trace:
+
+    @TestFactory
+    Iterator<DynamicTest> modifyItem() {
+          List<DynamicTest> dynamicTests = new ArrayList<>();
+
+          int maxLenDesc = 15;
+
+          List<Object[]> itemList = List.of(
+                  new Object[]{new Item("Description", "Category", "img-1", "10"), true},
+                  new Object[]{new Item("Description that is too long", "Category", "img-1", "10"), false},
+                  new Object[]{new Item(null, "Category", "img-1", "10"), false},
+                  new Object[]{new Item("Description", null, "img-1", "10"), false},
+                  new Object[]{new Item("Description", "Category", null, "10"), true}
+          );
+
+          int i = 1;
+
+          for (Object[] item : itemList) {
+              Item input = (Item)item[0];
+              Boolean expected = (Boolean)item[1];
+
+              dynamicTests.add(dynamicTest(
+                      "TC" + i + ": modifyItemTest",
+                      () -> assertEquals(expected, ModifyItem.modifyItem(input))
+              ));
+              i++;
+          }
+
+          return dynamicTests.iterator();
+    }
+
+    Error trace:
+
+    java: cannot find symbol
+      symbol:   variable seller.ModifyItem
+
+RESULT:
+The code, that ChatGPT provided us with, works as expected and the test passes.
+
+
+/*____________________*/
+
+
+USER STORY 3
+
+We prompted ChatGPT with the prompt below. We asked for the logic class based on the test method that we developed.
+
+    You are a software developer in a test driven development team, your task is to write class 'seller.CreateAuction' for the following test cases:
+
+    | TC1: createAuctionTest | Seller creates a new auction with an item, starting price, and start/end date and time. | Verify that an auction is successfully created when all required fields are correctly provided. | The auction is created successfully. |
+    | TC2: createAuctionTest | Seller selects an existing auction from the list of non-started auctions. | Verify that the seller can select and modify an existing auction. | The existing auction is selected and can be modified. |
+    | TC3: createAuctionTest | Seller does not create or select an item for the auction. | Verify that an error message is displayed when no item is provided. | An error message is shown, and the auction is not created. |
+    | TC4: createAuctionTest | Seller provides an incorrect starting price. | Verify that an error message is displayed when the starting price is invalid. | An error message is shown, and the auction is not created. |
+    | TC5: createAuctionTest | Seller provides an incorrect start or end date and time. | Verify that an error message is displayed when the date and time are not correctly inserted. | An error message is shown, and the auction is not created. |
+
+    using stubs and drivers.
+
+    Here is the test written so far with JUnit5, along with the error trace:
+
+    @TestFactory
+    Stream<DynamicTest> createAuctionTest() {
+          Item validItem = new Item ("Description", "Category", "img-1", "10");
+
+          LocalDateTime startTime = LocalDateTime.now();
+          LocalDateTime endTime = startTime.plusDays(1);
+
+          List<Object[]> auctionList = List.of(
+                  new Object[]{new Auction(validItem, "100.0", startTime, endTime, true, false), true},
+                  new Object[]{new Auction(validItem, "100.0", startTime, endTime, false, true), true},
+                  new Object[]{new Auction(null, "100.0", startTime, endTime, true, false), false},
+                  new Object[]{new Auction(validItem, null, startTime, endTime, true, false), false},
+                  new Object[]{new Auction(validItem, "100.0", endTime, startTime, true, false), false}
+          );
+
+          return  auctionList.stream().map((auctions) -> {
+              Auction auction = (Auction) auctions[0];
+              Boolean expected = (Boolean) auctions[1];
+
+              return dynamicTest(
+                      "createAuctionTest: " + auction,
+                      () -> assertEquals(expected, CreateAuction.createAuction(auction))
+              );
+          });
+    }
+
+    Error trace:
+
+    java: cannot find symbol
+      symbol:   variable seller.CreateAuction
+      symbol:   variable seller.Auction
+
+RESULT:
+The code, that ChatGPT provided us with, works as expected and the test passes.
