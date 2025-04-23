@@ -1,0 +1,215 @@
+USER STORY 1
+
+You are a software developer in a test driven development team, your task is to write class 'seller.CreateItem' for the following test cases:
+
+    | TC1 - registerToAuctionTest | A logged-in user selects an ongoing auction and requests to participate. | The system should check the auction status and grant access if it is ongoing. | The user is granted access, and the auction details and current price are displayed. |
+    | TC2 - registerToAuctionTest | A logged-in user selects an auction that is not ongoing and requests to participate. | The system should verify the auction status and deny access if it is not ongoing. | An error message is displayed stating that the auction is not available. |
+    | TC3 - registerToAuctionTest | A logged-in user who is already registered attempts to register again. | The system should detect duplicate registration attempts. | A warning message is displayed indicating that the user is already registered. |
+
+    using stubs and drivers.
+
+    Here is the test written so far with JUnit5, along with the error trace:
+
+    @TestFactory
+        Iterator<DynamicTest> registerToAuctionTest() {
+            List<DynamicTest> dynamicTests = new ArrayList<>();
+
+            User user = new User("userName", "userPass");
+            LocalDateTime now = LocalDateTime.now();
+
+            List<Object[]> registerToAuctionList = List.of(
+                    new Object[]{new RegisterToAuction(user, List.of(), now.minusHours(2), now.plusHours(3)), true},
+                    new Object[]{new RegisterToAuction(user, List.of(), now.plusDays(1), now.plusDays(1).plusHours(5)), false},
+                    new Object[]{new RegisterToAuction(user, List.of(user), now.minusHours(2), now.plusHours(3)), false}
+            );
+
+            int i = 1;
+
+            for (Object[] item : registerToAuctionList) {
+                RegisterToAuction input = (RegisterToAuction)item[0];
+                Boolean expected = (Boolean)item[1];
+
+                dynamicTests.add(dynamicTest(
+                        "TC" + i + ": registerToAuctionTest",
+                        () -> assertEquals(expected, RegisterToAuction.acceptRegistration(input))
+                ));
+                i++;
+            }
+
+            return dynamicTests.iterator();
+        }
+
+    Error trace:
+
+    java: cannot find symbol
+      symbol:   class User
+      location: class user.UserTest
+
+RESULT:
+The code, that ChatGPT provided us with, works as expected and the test passes.
+
+
+/*____________________*/
+
+
+USER STORY 2
+
+You are a software developer in a test driven development team, your task is to write class 'seller.CreateItem' for the following test cases:
+
+    | TC1 - loginTest | A user submits username and password that are not empty. The combination of username and password exists in the database, and they are not malformed. | The system should verify the credentials and grant access. | The user is successfully logged in. |
+    | TC2 - loginTest | A user submits an empty username or password. | The system should check for empty fields and prevent login. | An error message is displayed indicating that fields cannot be empty. |
+    | TC3 - loginTest | A user submits a non-existing combination in the database of username and password, or they are malformed. | The system should verify credentials and deny access if incorrect. | An error message is displayed indicating invalid credentials. |
+    | TC4 - loginTest | A user fails login 3 times in a row. | The system should track failed attempts and enforce a waiting period. | The user is locked out and must wait a specified number of hours before trying again. |
+
+
+    using stubs and drivers.
+
+    Here is the test written so far with JUnit5, along with the error trace:
+
+    @TestFactory
+        Iterator<DynamicTest> loginTest() {
+            List<DynamicTest> dynamicTests = new ArrayList<>();
+
+            List<Object[]> userLoginList = List.of(
+                    new Object[]{new UserLogin("userNameA", "userPassA", 1), true},
+                    new Object[]{new UserLogin("userNameB", "", 1), false},
+                    new Object[]{new UserLogin("userNameNonExisting", "userPassC", 1), false},
+                    new Object[]{new UserLogin("userNameD", "userPassD", 5), false}
+            );
+
+            int i = 1;
+
+            for (Object[] item : userLoginList) {
+                UserLogin input = (UserLogin)item[0];
+                Boolean expected = (Boolean)item[1];
+
+                dynamicTests.add(dynamicTest(
+                        "TC" + i + ": userLoginTest",
+                        () -> assertEquals(expected, UserLogin.login(input))
+                ));
+                i++;
+            }
+
+            return dynamicTests.iterator();
+        }
+
+    Error trace:
+
+    java: cannot find symbol
+      symbol:   class UserLogin
+      location: class user.UserTest
+
+RESULT:
+The code, that ChatGPT provided us with, works as expected and the test passes.
+
+
+/*____________________*/
+
+
+USER STORY 3
+
+You are a software developer in a test driven development team, your task is to write class 'seller.CreateItem' for the following test cases:
+
+| TC1 - placeBidTest | A logged-in user registered for an ongoing auction places a bid that is the current bid plus a positive multiple of the bid increment. | The system should verify the bid and update the auction price. | The bid is successfully placed, and the auction price is updated. |
+| TC2 - placeBidTest | A logged-in user registered for an ongoing auction places a bid that is not the current bid plus a positive multiple of the bid increment. | The system should validate the bid and reject it if it does not meet the rules. | An error message is displayed indicating that the bid is invalid. |
+
+    using stubs and drivers.
+
+    Here is the test written so far with JUnit5, along with the error trace:
+
+    @TestFactory
+        Iterator<DynamicTest> placeBidTest() {
+            List<DynamicTest> dynamicTests = new ArrayList<>();
+
+            LocalDateTime now = LocalDateTime.now();
+
+            User user = new User("userName", "userPass");
+            Auction auction = new Auction("id", "itemName", "itemCategory", "auctionDescription", 50.0, 3300.0, now, now.plusHours(3));
+
+            List<Object[]> placeBidList = List.of(
+                    new Object[]{new PlaceBid(user, 50.0, auction), true},
+                    new Object[]{new PlaceBid(user, 38.0, auction), false}
+            );
+
+            int i = 1;
+
+            for (Object[] item : placeBidList) {
+                PlaceBid input = (PlaceBid)item[0];
+                Boolean expected = (Boolean)item[1];
+
+                dynamicTests.add(dynamicTest(
+                        "TC" + i + ": userLoginTest",
+                        () -> assertEquals(expected, PlaceBid.updateBid(input))
+                ));
+                i++;
+            }
+
+            return dynamicTests.iterator();
+        }
+
+    Error trace:
+
+    java: cannot find symbol
+      symbol:   class Auction
+      location: class user.UserTest
+
+RESULT:
+The code, that ChatGPT provided us with, works as expected and the test passes.
+
+
+/*____________________*/
+
+
+USER STORY 4
+
+You are a software developer in a test driven development team, your task is to write class 'seller.CreateItem' for the following test cases:
+
+| TC1 - searchAuctionTest | A logged-in user searches using an existing auction ID, item description, item category, or date. | The system should retrieve and display relevant ongoing auctions. | A list of matching ongoing auctions is displayed. |
+| TC2 - searchAuctionTest | A logged-in user searches for an auction that does not exist. | The system should verify the search criteria and return a warning if no auctions are found. | A warning message is displayed indicating no matching auctions. |
+| TC3 - searchAuctionTest | A logged-in user enters incorrect, malformed or missing search criteria. | The system should validate the input and reject invalid search queries. | An error message is displayed indicating incorrect or missing search criteria. |
+
+    using stubs and drivers.
+
+    Here is the test written so far with JUnit5, along with the error trace:
+
+    @TestFactory
+        Iterator<DynamicTest> searchAuctionTest() {
+            List<DynamicTest> dynamicTests = new ArrayList<>();
+
+            LocalDateTime now = LocalDateTime.now();
+
+            Auction auction = new Auction("id", "itemName", "itemCategory", "auctionDescription", 50.0, 3300.0, now, now.plusHours(3));
+
+            List<Object[]> searchAuctionList = List.of(
+                    new Object[]{new SearchAuction(auction, "id"), true},
+                    new Object[]{new SearchAuction(auction, "non-existent-id"), false},
+                    new Object[]{new SearchAuction(auction, "malformed", "search", "criteria"), false}
+            );
+
+            int i = 1;
+
+            for (Object[] item : searchAuctionList) {
+                SearchAuction input = (SearchAuction)item[0];
+                Boolean expected = (Boolean)item[1];
+
+                dynamicTests.add(dynamicTest(
+                        "TC" + i + ": userLoginTest",
+                        () -> assertEquals(expected, SearchAuction.searchAuction(input))
+                ));
+                i++;
+            }
+
+            return dynamicTests.iterator();
+        }
+
+    Error trace:
+
+    java: cannot find symbol
+      symbol:   class SearchAuction
+      location: class user.UserTest
+
+RESULT:
+The code, that ChatGPT provided us with, works as expected and the test passes.
+
+
+/*____________________*/
