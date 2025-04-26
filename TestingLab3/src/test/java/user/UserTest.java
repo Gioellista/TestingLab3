@@ -129,4 +129,39 @@ public class UserTest {
         return dynamicTests.iterator();
     }
 
+    @TestFactory
+    Iterator<DynamicTest> selectAuctionTest() {
+        List<DynamicTest> dynamicTests = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
+
+
+        Auction auction1 = new Auction("1", "Item1", "Category1", "Description1", 50.0, 3300.0, now, now.plusHours(3));
+        Auction auction2 = new Auction("2", "Item2", "Category2", "Description2", 100.0, 3500.0, now.plusMinutes(10), now.plusHours(5));
+
+
+        List<Auction> availableAuctions = List.of(auction1, auction2);
+
+        List<Object[]> selectAuctionList = List.of(
+                new Object[]{availableAuctions, "1", true},
+                new Object[]{availableAuctions, "non-existent-id", false},
+                new Object[]{availableAuctions, null, false}
+        );
+
+        int i = 1;
+
+        for (Object[] item : selectAuctionList) {
+            List<Auction> auctions = (List<Auction>) item[0];
+            String selectedAuctionId = (String) item[1];
+            Boolean expected = (Boolean) item[2];
+
+            dynamicTests.add(dynamicTest(
+                    "TC" + i + ": selectAuctionTest",
+                    () -> assertEquals(expected, SelectAuction.selectAuction(auctions, selectedAuctionId))
+            ));
+            i++;
+        }
+
+        return dynamicTests.iterator();
+    }
+
 }
