@@ -25,7 +25,7 @@ We prompted ChatGPT with the prompt below. We asked for the logic class based on
        symbol:   variable auction.RegisterBid
 
 RESULT:
-The code, that ChatGPT provided us with, works as expected and the test passes.
+The code, that ChatGPT provided us with (RegisterBid.java), works as expected and the test passes.
 
 
 /*____________________*/
@@ -63,7 +63,7 @@ We prompted ChatGPT with the prompt below. We asked for the logic class based on
        symbol:   variable auction.isOngoing
 
 RESULT:
-The code, that ChatGPT provided us with, works as expected and the test passes.
+The code, that ChatGPT provided us with (isOngoing.java), works as expected and the test passes.
 
 
 /*____________________*/
@@ -96,7 +96,7 @@ We prompted ChatGPT with the prompt below. We asked for the logic class based on
       symbol:   variable auction.checkRemainingTime
 
 RESULT:
-The code, that ChatGPT provided us with, works as expected and the test passes.
+The code, that ChatGPT provided us with (checkRemainingTime.java), works as expected and the test passes.
 
 
 /*____________________*/
@@ -142,7 +142,7 @@ We prompted ChatGPT with the prompt below. We asked for the logic class based on
       symbol:   variable auction.awardItem
 
 RESULT:
-The code, that ChatGPT provided us with, works as expected and the test passes.
+The code, that ChatGPT provided us with (AwardItem.java), works as expected and the test passes.
 
 
 

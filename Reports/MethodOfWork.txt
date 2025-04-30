@@ -1,0 +1,23 @@
+--- Workload Distribution ---
+
+The AuctionTest part was carried out during the first lab of testing. We wrote the tests, prompted ChatGPT
+and inserted the additional classes together.
+
+As for the other two tests (Seller and User), we decided to split the work. We did them on our own and compared the results
+during the lab classes.
+
+--- Work backlog ---
+
+This section aims to describe how we followed the Test Driven Development (TDD) approach.
+We first wrote the tests and run them. Then, we prompted ChatGPT with the test just written and the error trace
+(the exact prompt can be found in the reports). Consequently, we added the classes given by ChatGPT into our project
+and run the test again.
+
+The documentation of the steps and the interactions with ChatGPT is in the Auction_Report, Seller_Report and User_Report.
+
+--- Testing types ---
+
+We opted for different kinds of tests.
+The AuctionTest comprises static tests, because at the time the dynamic tests were not explained yet.
+The SellerTest and UserTest adopt, on the other hand, the dynamic test approach: in the UserTest we used an Iterator over a list,
+whereas in the SellerTest we implemented the Supplier/Consumer strategy within the Stream.

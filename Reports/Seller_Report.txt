@@ -15,34 +15,24 @@ We prompted ChatGPT with the prompt below. We asked for the logic class based on
     Here is the test written so far with JUnit5, along with the error trace:
 
     @TestFactory
-    Iterator<DynamicTest> createItem() {
-          List<DynamicTest> dynamicTests = new ArrayList<>();
+        Stream<DynamicTest> createItemTest() {
 
-          int maxLenDesc = 15;
+            List<Object[]> itemList = List.of(
+                    new Object[]{new Item("Description", "Category", "img-1", "10"), true},
+                    new Object[]{new Item("Description that is too long", "Category", "img-1", "10"), false},
+                    new Object[]{new Item("Description", "Category", "img-1", null), false},
+                    new Object[]{new Item("Description", null, "img-1", "10"), false},
+                    new Object[]{new Item("Description", "Category", null, "10"), true}
+            );
 
-          List<Object[]> itemList = List.of(
-                  new Object[]{new Item("Description", "Category", "img-1", "10"), true},
-                  new Object[]{new Item("Description that is too long", "Category", "img-1", "10"), false},
-                  new Object[]{new Item("Description", "Category", "img-1", null), false},
-                  new Object[]{new Item("Description", null, "img-1", "10"), false},
-                  new Object[]{new Item("Description", "Category", null, "10"), true}
-          );
+            Iterator<Object[]> iter = itemList.iterator();
 
-          int i = 1;
+            Function<Object[], String> displayNameGenerator = (item) -> "createItemTest: " + item;
 
-          for (Object[] item : itemList) {
-              Item input = (Item)item[0];
-              Boolean expected = (Boolean)item[1];
+            ThrowingConsumer<Object[]> testExecutor = (items) -> assertEquals(items[1], CreateItem.createItem((Item)items[0]));
 
-              dynamicTests.add(dynamicTest(
-                      "TC" + i + ": createItemTest",
-                      () -> assertEquals(expected, CreateItem.createItem(input))
-              ));
-              i++;
-          }
-
-          return dynamicTests.iterator();
-    }
+            return DynamicTest.stream(iter, displayNameGenerator, testExecutor);
+        }
 
     Error trace:
 
@@ -51,7 +41,7 @@ We prompted ChatGPT with the prompt below. We asked for the logic class based on
       symbol:   variable seller.Item
 
 RESULT:
-The code, that ChatGPT provided us with, works as expected and the test passes.
+The code, that ChatGPT provided us with (CreateItem.java and Item.java), works as expected and the test passes.
 
 
 /*____________________*/
@@ -74,34 +64,24 @@ We prompted ChatGPT with the prompt below. We asked for the logic class based on
     Here is the test written so far with JUnit5, along with the error trace:
 
     @TestFactory
-    Iterator<DynamicTest> modifyItem() {
-          List<DynamicTest> dynamicTests = new ArrayList<>();
+        Stream<DynamicTest> modifyItemTest() {
 
-          int maxLenDesc = 15;
+            List<Object[]> itemList = List.of(
+                    new Object[]{new Item("Description", "Category", "img-1", "10"), true},
+                    new Object[]{new Item("Description that is too long", "Category", "img-1", "10"), false},
+                    new Object[]{new Item(null, "Category", "img-1", "10"), false},
+                    new Object[]{new Item("Description", null, "img-1", "10"), false},
+                    new Object[]{new Item("Description", "Category", null, "10"), true}
+            );
 
-          List<Object[]> itemList = List.of(
-                  new Object[]{new Item("Description", "Category", "img-1", "10"), true},
-                  new Object[]{new Item("Description that is too long", "Category", "img-1", "10"), false},
-                  new Object[]{new Item(null, "Category", "img-1", "10"), false},
-                  new Object[]{new Item("Description", null, "img-1", "10"), false},
-                  new Object[]{new Item("Description", "Category", null, "10"), true}
-          );
+            Iterator<Object[]> iter = itemList.iterator();
 
-          int i = 1;
+            Function<Object[], String> displayNameGenerator = (item) -> "modifyItemTest: " + item;
 
-          for (Object[] item : itemList) {
-              Item input = (Item)item[0];
-              Boolean expected = (Boolean)item[1];
+            ThrowingConsumer<Object[]> testExecutor = (items) -> assertEquals(items[1], ModifyItem.modifyItem((Item)items[0]));
 
-              dynamicTests.add(dynamicTest(
-                      "TC" + i + ": modifyItemTest",
-                      () -> assertEquals(expected, ModifyItem.modifyItem(input))
-              ));
-              i++;
-          }
-
-          return dynamicTests.iterator();
-    }
+            return DynamicTest.stream(iter, displayNameGenerator, testExecutor);
+        }
 
     Error trace:
 
@@ -109,7 +89,7 @@ We prompted ChatGPT with the prompt below. We asked for the logic class based on
       symbol:   variable seller.ModifyItem
 
 RESULT:
-The code, that ChatGPT provided us with, works as expected and the test passes.
+The code, that ChatGPT provided us with (ModifyItem.java), works as expected and the test passes.
 
 
 /*____________________*/
@@ -132,30 +112,28 @@ We prompted ChatGPT with the prompt below. We asked for the logic class based on
     Here is the test written so far with JUnit5, along with the error trace:
 
     @TestFactory
-    Stream<DynamicTest> createAuctionTest() {
-          Item validItem = new Item ("Description", "Category", "img-1", "10");
+        Stream<DynamicTest> createAuctionTest() {
+            Item validItem = new Item ("Description", "Category", "img-1", "10");
 
-          LocalDateTime startTime = LocalDateTime.now();
-          LocalDateTime endTime = startTime.plusDays(1);
+            LocalDateTime startTime = LocalDateTime.now();
+            LocalDateTime endTime = startTime.plusHours(3);
 
-          List<Object[]> auctionList = List.of(
-                  new Object[]{new Auction(validItem, "100.0", startTime, endTime, true, false), true},
-                  new Object[]{new Auction(validItem, "100.0", startTime, endTime, false, true), true},
-                  new Object[]{new Auction(null, "100.0", startTime, endTime, true, false), false},
-                  new Object[]{new Auction(validItem, null, startTime, endTime, true, false), false},
-                  new Object[]{new Auction(validItem, "100.0", endTime, startTime, true, false), false}
-          );
+            List<Object[]> auctionList = List.of(
+                    new Object[]{new Auction(validItem, "100.0", startTime, endTime, true, false), true},
+                    new Object[]{new Auction(validItem, "100.0", startTime, endTime, false, true), true},
+                    new Object[]{new Auction(null, "100.0", startTime, endTime, true, false), false},
+                    new Object[]{new Auction(validItem, null, startTime, endTime, true, false), false},
+                    new Object[]{new Auction(validItem, "100.0", endTime, startTime, true, false), false}
+            );
 
-          return  auctionList.stream().map((auctions) -> {
-              Auction auction = (Auction) auctions[0];
-              Boolean expected = (Boolean) auctions[1];
+            Iterator<Object[]> iter = auctionList.iterator();
 
-              return dynamicTest(
-                      "createAuctionTest: " + auction,
-                      () -> assertEquals(expected, CreateAuction.createAuction(auction))
-              );
-          });
-    }
+            Function<Object[], String> displayNameGenerator = (auction) -> "createAuctionTest: " + auction;
+
+            ThrowingConsumer<Object[]> testExecutor = (auctions) -> assertEquals(auctions[1], CreateAuction.createAuction((Auction)auctions[0]));
+
+            return DynamicTest.stream(iter, displayNameGenerator, testExecutor);
+        }
 
     Error trace:
 
@@ -164,4 +142,4 @@ We prompted ChatGPT with the prompt below. We asked for the logic class based on
       symbol:   variable seller.Auction
 
 RESULT:
-The code, that ChatGPT provided us with, works as expected and the test passes.
+The code, that ChatGPT provided us with (CreateAuction.java and Auction.java), works as expected and the test passes.

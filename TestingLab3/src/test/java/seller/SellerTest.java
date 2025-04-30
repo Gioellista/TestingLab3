@@ -2,11 +2,14 @@ package seller;
 
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.function.ThrowingConsumer;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,10 +18,7 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 public class SellerTest {
 
     @TestFactory
-    Iterator<DynamicTest> createItemTest() {
-        List<DynamicTest> dynamicTests = new ArrayList<>();
-
-        int maxLenDesc = 15;
+    Stream<DynamicTest> createItemTest() {
 
         List<Object[]> itemList = List.of(
                 new Object[]{new Item("Description", "Category", "img-1", "10"), true},
@@ -28,28 +28,18 @@ public class SellerTest {
                 new Object[]{new Item("Description", "Category", null, "10"), true}
         );
 
-        int i = 1;
+        Iterator<Object[]> iter = itemList.iterator();
 
-        for (Object[] item : itemList) {
-            Item input = (Item)item[0];
-            Boolean expected = (Boolean)item[1];
+        Function<Object[], String> displayNameGenerator = (item) -> "createItemTest: " + item;
 
-            dynamicTests.add(dynamicTest(
-                    "TC" + i + ": createItemTest",
-                    () -> assertEquals(expected, CreateItem.createItem(input))
-            ));
-            i++;
-        }
+        ThrowingConsumer<Object[]> testExecutor = (items) -> assertEquals(items[1], CreateItem.createItem((Item)items[0]));
 
-        return dynamicTests.iterator();
+        return DynamicTest.stream(iter, displayNameGenerator, testExecutor);
     }
 
 
     @TestFactory
-    Iterator<DynamicTest> modifyItemTest() {
-        List<DynamicTest> dynamicTests = new ArrayList<>();
-
-        int maxLenDesc = 15;
+    Stream<DynamicTest> modifyItemTest() {
 
         List<Object[]> itemList = List.of(
                 new Object[]{new Item("Description", "Category", "img-1", "10"), true},
@@ -59,20 +49,13 @@ public class SellerTest {
                 new Object[]{new Item("Description", "Category", null, "10"), true}
         );
 
-        int i = 1;
+        Iterator<Object[]> iter = itemList.iterator();
 
-        for (Object[] item : itemList) {
-            Item input = (Item)item[0];
-            Boolean expected = (Boolean)item[1];
+        Function<Object[], String> displayNameGenerator = (item) -> "modifyItemTest: " + item;
 
-            dynamicTests.add(dynamicTest(
-                    "TC" + i + ": modifyItemTest",
-                    () -> assertEquals(expected, ModifyItem.modifyItem(input))
-            ));
-            i++;
-        }
+        ThrowingConsumer<Object[]> testExecutor = (items) -> assertEquals(items[1], ModifyItem.modifyItem((Item)items[0]));
 
-        return dynamicTests.iterator();
+        return DynamicTest.stream(iter, displayNameGenerator, testExecutor);
     }
 
     @TestFactory
@@ -90,16 +73,12 @@ public class SellerTest {
                 new Object[]{new Auction(validItem, "100.0", endTime, startTime, true, false), false}
         );
 
-        return  auctionList.stream().map((auctions) -> {
-            Auction auction = (Auction) auctions[0];
-            Boolean expected = (Boolean) auctions[1];
+        Iterator<Object[]> iter = auctionList.iterator();
 
-            return dynamicTest(
-                    "createAuctionTest: " + auction,
-                    () -> assertEquals(expected, CreateAuction.createAuction(auction))
+        Function<Object[], String> displayNameGenerator = (auction) -> "createAuctionTest: " + auction;
 
-            );
+        ThrowingConsumer<Object[]> testExecutor = (auctions) -> assertEquals(auctions[1], CreateAuction.createAuction((Auction)auctions[0]));
 
-        });
+        return DynamicTest.stream(iter, displayNameGenerator, testExecutor);
     }
 }

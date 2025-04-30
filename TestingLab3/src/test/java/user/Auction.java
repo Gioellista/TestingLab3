@@ -44,6 +44,10 @@ public class Auction {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -54,6 +58,10 @@ public class Auction {
 
     public LocalDateTime getStartTime() {
         return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 }
 

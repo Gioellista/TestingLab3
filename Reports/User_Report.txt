@@ -46,7 +46,7 @@ You are a software developer in a test driven development team, your task is to 
       location: class user.UserTest
 
 RESULT:
-The code, that ChatGPT provided us with, works as expected and the test passes.
+The code, that ChatGPT provided us with (User.java), works as expected and the test passes.
 
 
 /*____________________*/
@@ -100,7 +100,7 @@ You are a software developer in a test driven development team, your task is to 
       location: class user.UserTest
 
 RESULT:
-The code, that ChatGPT provided us with, works as expected and the test passes.
+The code, that ChatGPT provided us with (UserLogin.java), works as expected and the test passes.
 
 
 /*____________________*/
@@ -154,7 +154,7 @@ You are a software developer in a test driven development team, your task is to 
       location: class user.UserTest
 
 RESULT:
-The code, that ChatGPT provided us with, works as expected and the test passes.
+The code, that ChatGPT provided us with (Auction.java), works as expected and the test passes.
 
 
 /*____________________*/
@@ -209,7 +209,7 @@ You are a software developer in a test driven development team, your task is to 
       location: class user.UserTest
 
 RESULT:
-The code, that ChatGPT provided us with, works as expected and the test passes.
+The code, that ChatGPT provided us with (SearchAuction.java), works as expected and the test passes.
 
 
 /*____________________*/
@@ -268,4 +268,4 @@ You are a software developer in a test driven development team, your task is to 
       location: class user.UserTest
 
 RESULT:
-The code, that ChatGPT provided us with, works as expected and the test passes.
+The code, that ChatGPT provided us with (SelectAuction.java), works as expected and the test passes.
